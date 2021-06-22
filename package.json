@@ -24,7 +24,7 @@
     "react-typist": "^2.0.5",
     "web-vitals": "^1.1.2"
   },
-  "proxy": "http://localhost:3001/",
+  "proxy": "https://damp-savannah-74900.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
