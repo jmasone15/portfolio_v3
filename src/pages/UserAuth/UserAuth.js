@@ -4,7 +4,6 @@ import Footer from "../../components/Footer";
 import Navs from "../../components/Navs";
 import axios from "axios";
 import AuthContext from "../../utils/context/AuthContext";
-import UserContext from "../../utils/context/UserContext";
 import SignUp from "../../components/SignUp";
 import SignedIn from "../../components/SignedIn";
 import Container from "react-bootstrap/esm/Container";
@@ -19,7 +18,7 @@ export default function UserAuth({ theme, setCurrentPage, setDraw }) {
     const [switcher, setSwitcher] = useState("signup");
     const { getLoggedIn } = useContext(AuthContext);
     const { loggedIn } = useContext(AuthContext);
-    const { userEmail } = useContext(UserContext);
+
 
     async function signUp(e) {
         e.preventDefault();
@@ -32,6 +31,7 @@ export default function UserAuth({ theme, setCurrentPage, setDraw }) {
 
             await axios.post("https://damp-savannah-74900.herokuapp.com/auth/signup", signUpData);
             await getLoggedIn();
+            setEmail(email);
         } catch (err) {
             console.error(err);
             alert(err.request.response);
@@ -49,6 +49,7 @@ export default function UserAuth({ theme, setCurrentPage, setDraw }) {
 
             await axios.post("https://damp-savannah-74900.herokuapp.com/auth/login", signUpData);
             await getLoggedIn();
+            setEmail(email);
         } catch (err) {
             console.error(err);
             alert(err.request.response);
@@ -110,7 +111,7 @@ export default function UserAuth({ theme, setCurrentPage, setDraw }) {
                             {loggedIn === true && (
                                 <SignedIn
                                     signOut={signOut}
-                                    email={userEmail}
+                                    email={email}
                                     theme={theme}
                                     type={switcher}
                                 />
