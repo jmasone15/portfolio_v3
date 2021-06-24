@@ -4,15 +4,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from 'react-bootstrap/Card';
 
-export default function SignedIn({ signOut, email, type }) {
+export default function SignedIn({ signOut, email, type, theme }) {
     return (
         <Container className="login-container">
             <Row>
                 <Col>
-                    <Card>
+                    <Card className={theme ? "" : "signup-card-dark"}>
                         {type === "signup" && (<Card.Header className="login-header">Signed Up: <b>{email}</b></Card.Header>)}
                         {type === "login" && (<Card.Header className="login-header">Logged In: <b>{email}</b></Card.Header>)}
-                        <Card.Body className="font">
+                        <Card.Body className={theme ? "font" : "font-dark"}>
                             <div>
                                 <p>You are now considered "logged in" to the webpage.</p>
                                 <p>If you were to look in the dev tools (F12) and check the Application tab, you can see a JSON Web Token in the cookie storage. The application checks to see if there is a token in storage and then verifies that it originated from this webpage.</p>
@@ -21,7 +21,7 @@ export default function SignedIn({ signOut, email, type }) {
                             </div>
                             <form onSubmit={(e) => signOut(e)} className="form__group">
                                 <div className="btn-div">
-                                    <button className="login-btn first-login" type="submit">Logout</button>
+                                    <button className={theme ? "login-btn first-login" : "login-btn-dark first-login-dark"} type="submit">Logout</button>
                                 </div>
                             </form>
                         </Card.Body>

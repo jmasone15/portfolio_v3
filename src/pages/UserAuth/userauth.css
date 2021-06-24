@@ -105,6 +105,10 @@
 
 /* Dark Mode */
 
+.font-dark {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+} 
 
 .u-header-dark {
     font-family: 'Courier New', Courier, monospace;
