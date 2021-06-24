@@ -4,7 +4,9 @@ import Footer from "../../components/Footer";
 import Navs from "../../components/Navs";
 import axios from "axios";
 import AuthContext from "../../utils/context/AuthContext";
+import UserContext from "../../utils/context/UserContext";
 import SignUp from "../../components/SignUp";
+import SignedIn from "../../components/SignedIn";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
@@ -15,8 +17,9 @@ export default function UserAuth({ theme, setCurrentPage, setDraw }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [switcher, setSwitcher] = useState("signup");
-    const { loggedIn } = useContext(AuthContext);
     const { getLoggedIn } = useContext(AuthContext);
+    const { loggedIn } = useContext(AuthContext);
+    const { userEmail } = useContext(UserContext);
 
     async function signUp(e) {
         e.preventDefault();
@@ -29,8 +32,6 @@ export default function UserAuth({ theme, setCurrentPage, setDraw }) {
 
             await axios.post("https://damp-savannah-74900.herokuapp.com/auth/signup", signUpData);
             await getLoggedIn();
-            setEmail("");
-            setPassword("");
         } catch (err) {
             console.error(err);
             alert(err.request.response);
@@ -48,15 +49,18 @@ export default function UserAuth({ theme, setCurrentPage, setDraw }) {
 
             await axios.post("https://damp-savannah-74900.herokuapp.com/auth/login", signUpData);
             await getLoggedIn();
-            if (loggedIn === true) {
-                setEmail("");
-                setPassword("");
-                history.push("/signedIn");
-            }
         } catch (err) {
             console.error(err);
             alert(err.request.response);
         }
+    }
+
+    async function signOut(e) {
+        e.preventDefault();
+        setEmail("");
+        setPassword("");
+        await axios.get("https://damp-savannah-74900.herokuapp.com/auth/logout");
+        await getLoggedIn();
     }
 
     const history = useHistory();
@@ -90,17 +94,27 @@ export default function UserAuth({ theme, setCurrentPage, setDraw }) {
                 <Container>
                     <Row>
                         <Col>
-                            <SignUp
-                                email={email}
-                                setEmail={setEmail}
-                                password={password}
-                                setPassword={setPassword}
-                                signUp={signUp}
-                                login={login}
-                                theme={theme}
-                                switcher={switcher}
-                                setSwitcher={setSwitcher}
-                            />
+                            {loggedIn === false && (
+                                <SignUp
+                                    email={email}
+                                    setEmail={setEmail}
+                                    password={password}
+                                    setPassword={setPassword}
+                                    signUp={signUp}
+                                    login={login}
+                                    theme={theme}
+                                    switcher={switcher}
+                                    setSwitcher={setSwitcher}
+                                />
+                            )}
+                            {loggedIn === true && (
+                                <SignedIn
+                                    signOut={signOut}
+                                    email={userEmail}
+                                    theme={theme}
+                                    type={switcher}
+                                />
+                            )}
                         </Col>
                     </Row>
                 </Container>
