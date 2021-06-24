@@ -10,8 +10,8 @@ export default function SignedIn({ signOut, email, type, theme }) {
             <Row>
                 <Col>
                     <Card className={theme ? "" : "signup-card-dark"}>
-                        {type === "signup" && (<Card.Header className="login-header">Signed Up: <b>{email}</b></Card.Header>)}
-                        {type === "login" && (<Card.Header className="login-header">Logged In: <b>{email}</b></Card.Header>)}
+                        {type === "signup" && (<Card.Header className={theme ? "login-header" : "login-header-dark"}>Signed Up: <b>{email}</b></Card.Header>)}
+                        {type === "login" && (<Card.Header className={theme ? "login-header" : "login-header-dark"}>Logged In: <b>{email}</b></Card.Header>)}
                         <Card.Body className={theme ? "font" : "font-dark"}>
                             <div>
                                 <p>You are now considered "logged in" to the webpage.</p>
